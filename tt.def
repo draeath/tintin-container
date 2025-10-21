@@ -1,0 +1,34 @@
+Bootstrap: docker
+From: docker.io/library/alpine:3.22
+Stage: build
+
+%arguments
+    VERSION=2.02.51
+
+%post
+    apk update
+    apk upgrade --available
+    apk add build-base zlib-dev gnutls-dev pcre-dev make
+    wget https://github.com/scandum/tintin/releases/download/{{ VERSION }}/tintin-{{ VERSION }}.tar.gz
+    tar xvf tintin-{{ VERSION }}.tar.gz
+    cd tt/src
+    ./configure
+    make -j$(nproc)
+    make install
+
+#######################################
+Bootstrap: docker
+From: docker.io/library/alpine:3.22
+Stage: runtime
+
+%post
+    apk update
+    apk upgrade --available
+    apk add gnutls pcre
+    mkdir -pv /opt/tintin++/bin
+
+%files from build
+    /usr/local/bin/tt++ /usr/local/bin/tt++
+
+%runscript
+    /usr/local/bin/tt++ "$@"

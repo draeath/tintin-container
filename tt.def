@@ -25,7 +25,6 @@ Stage: runtime
     apk update
     apk upgrade --available
     apk add gnutls pcre
-    mkdir -pv /opt/tintin++/bin
 
 %files from build
     /usr/local/bin/tt++ /usr/local/bin/tt++

@@ -1,0 +1,15 @@
+diff --git a/Makefile.in b/Makefile.in
+index 38e2c0b..eb2950d 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -20,8 +20,8 @@
+ 
+ DEFINES = -D_GNU_SOURCE @DEFS@
+ 
+-CC = @CC@ -g -Wall
+-MAKE = @MAKE@
++CC = @CC@ -flto=auto -fuse-linker-plugin -march=native -O3
++MAKE = @MAKE@ -j$(nproc)
+ 
+ prefix = @prefix@
+ exec_prefix = @exec_prefix@

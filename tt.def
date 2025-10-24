@@ -5,6 +5,9 @@ Stage: build
 %arguments
     VERSION=2.02.51
 
+%files
+    build.patch
+
 %post
     apk update
     apk upgrade --available
@@ -12,6 +15,7 @@ Stage: build
     wget https://github.com/scandum/tintin/releases/download/{{ VERSION }}/tintin-{{ VERSION }}.tar.gz
     tar xvf tintin-{{ VERSION }}.tar.gz
     cd tt/src
+    patch < ../../build.patch
     ./configure
     make -j$(nproc)
     make install

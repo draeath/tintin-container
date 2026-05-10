@@ -1,9 +1,9 @@
 Bootstrap: docker
-From: docker.io/library/alpine:3.22
+From: docker.io/library/alpine:3.23
 Stage: build
 
 %arguments
-    VERSION=2.02.51
+    VERSION=2.02.61
 
 %files
     build.patch
@@ -11,7 +11,7 @@ Stage: build
 %post
     apk update
     apk upgrade --available
-    apk add build-base zlib-dev gnutls-dev pcre-dev make
+    apk add build-base zlib-dev gnutls-dev pcre2-dev make
     wget https://github.com/scandum/tintin/releases/download/{{ VERSION }}/tintin-{{ VERSION }}.tar.gz
     tar xvf tintin-{{ VERSION }}.tar.gz
     cd tt/src
@@ -22,13 +22,13 @@ Stage: build
 
 #######################################
 Bootstrap: docker
-From: docker.io/library/alpine:3.22
+From: docker.io/library/alpine:3.23
 Stage: runtime
 
 %post
     apk update
     apk upgrade --available
-    apk add gnutls pcre
+    apk add gnutls pcre2
 
 %files from build
     /usr/local/bin/tt++ /usr/local/bin/tt++

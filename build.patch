@@ -6,7 +6,7 @@
 
 -CC = @CC@ -g -O3 -Wall
 -MAKE = @MAKE@
-+CC = @CC@ -flto=auto -fuse-linker-plugin -march=native -O3
++CC = @CC@ -flto=auto -fuse-linker-plugin -mtune=native -O2
 +MAKE = @MAKE@ -j$(nproc)
 
  prefix = @prefix@

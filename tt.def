@@ -2,6 +2,14 @@ Bootstrap: docker
 From: docker.io/library/alpine:3.23
 Stage: build
 
+%setup
+  if [ -n "${XDG_RUNTIME_DIR}" ]; then
+    mkdir -p "${APPTAINER_ROOTFS}${XDG_RUNTIME_DIR}"
+  else
+    HOST_UID="${SUDO_UID:-$(id -u)}"
+    mkdir -p "${APPTAINER_ROOTFS}/run/user/${HOST_UID}"
+  fi
+
 %arguments
     VERSION=2.02.61
 
